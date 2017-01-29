@@ -1,22 +1,22 @@
 'use strict'
 
-var positions = {
-  "TOP_LEFT": {'x': -1, 'y': -1},
-  "TOP_CENTER": {'x': 0, 'y': -1},
-  "TOP_RIGHT": {'x': 1, 'y': -1},
-  "RIGHT": {'x': 0, 'y': 1},
-  "BOT_RIGHT": {'x': 1, 'y': 1},
-  "BOT_CENTER": {'x': 0, 'y': 1},
-  "BOT_LEFT": {'x': -1, 'y': 1},
-  "LEFT": {'x': 0, 'y': -1},
-}
+var positions = [
+  [-1, -1], // top-left
+  [0, -1], // top-center
+  [1, -1], // top-right
+  [1, 0], // right
+  [1, 1], // bottom right
+  [0, 1], // bottom center
+  [-1, 1], // bottom left
+  [-1, 0], // left
+];
 
-var updateCellNeighbors = function(neighbors, coordiates, position) {
-  var index = (coordiates[0] + position[x]) + ',' + (coordinates[1] + position[y]);
+var updateCellNeighbors = function(neighbors, coordinates, position) {
+  var index = (coordinates[0] + position[0]) + ',' + (coordinates[1] + position[1]);
   if (neighbors[index]) {
     neighbors[index].n++;
   } else {
-    neighbors[index] = {'x': coordiates[0] + position[x], 'y': coordiates[1] + position[y], 'n': 1};
+    neighbors[index] = {'x': coordinates[0] + position[0], 'y': coordinates[1] + position[1], 'n': 1};
   }
 }
 
@@ -24,20 +24,21 @@ function evolve(shape) {
   var neighbors = {};
   var evolvedShape = [];
 
-  shape.forEach(function(coordiates, i) {
+  shape.forEach(function(coordinates, i) {
     positions.forEach(function(position) {
-      updateCellNeighbors(neighbors, coordiates, position);
+      updateCellNeighbors(neighbors, coordinates, position);
     });
   });
 
-  shape.forEach(function(coordiates) {
-    var index = (coordiates[0] + position[x]) + ',' + (coordinates[1] + position[y]);
+  shape.forEach(function(coordinates) {
+    var index = coordinates[0] + ',' + coordinates[1];
     if (neighbors[index]) {
       neighbors[index].populated = true;
     }
   });
 
-  neighbors.forEach(function(neighbor) {
+  Object.keys(neighbors).forEach(function(key) {
+    var neighbor = neighbors[key];
     if (neighbor.n === 3 || neighbor.n === 2 && neighbor.populated) {
       evolvedShape.push([neighbor.x, neighbor.y]);
     }
