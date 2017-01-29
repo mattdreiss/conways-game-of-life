@@ -7,7 +7,7 @@ var updateCellNeighbor = function(neighbors, coordinates, position) {
   } else {
     neighbors[index] = {'x': coordinates[0] + position[0], 'y': coordinates[1] + position[1], 'n': 1};
   }
-}
+};
 
 var evolve = function(shape) {
   if (!shape) {
@@ -48,4 +48,4 @@ var evolve = function(shape) {
   });
 
   return evolvedShape;
-}
+};
