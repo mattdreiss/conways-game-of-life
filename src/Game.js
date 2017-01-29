@@ -10,6 +10,10 @@ var updateCellNeighbor = function(neighbors, coordinates, position) {
 }
 
 var evolve = function(shape) {
+  if (!shape) {
+    return [];
+  }
+
   var neighbors = {};
   var evolvedShape = [];
   var positions = [

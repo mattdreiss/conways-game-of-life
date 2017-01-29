@@ -1,9 +1,6 @@
 'use strict'
 
 describe('Test Conway\'s game of life simulation', function() {
-  it('it works', function() {
-    expect(true).toBeTruthy();
-  });
 
   it('updates non-existant cell neighbor', function() {
     var neighbors = {};
@@ -23,6 +20,16 @@ describe('Test Conway\'s game of life simulation', function() {
     expect(neighbors['0,0'].x).toBe(expected['0,0'].x);
     expect(neighbors['0,0'].y).toBe(expected['0,0'].y);
     expect(neighbors['0,0'].n).toBe(expected['0,0'].n);
+  });
+
+  it('evolves undefined shape', function() {
+    expect(evolve().length).toBe(0);
+  });
+
+  it('evolves empty shape', function() {
+    var shape = [];
+
+    expect(evolve(shape).length).toBe(0);
   });
 
   it('evolve 3 cell shape', function() {
