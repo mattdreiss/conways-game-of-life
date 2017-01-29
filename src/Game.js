@@ -1,17 +1,6 @@
 'use strict'
 
-var positions = [
-  [-1, -1], // top-left
-  [0, -1], // top-center
-  [1, -1], // top-right
-  [1, 0], // right
-  [1, 1], // bottom right
-  [0, 1], // bottom center
-  [-1, 1], // bottom left
-  [-1, 0], // left
-];
-
-var updateCellNeighbors = function(neighbors, coordinates, position) {
+var updateCellNeighbor = function(neighbors, coordinates, position) {
   var index = (coordinates[0] + position[0]) + ',' + (coordinates[1] + position[1]);
   if (neighbors[index]) {
     neighbors[index].n++;
@@ -20,13 +9,23 @@ var updateCellNeighbors = function(neighbors, coordinates, position) {
   }
 }
 
-function evolve(shape) {
+var evolve = function(shape) {
   var neighbors = {};
   var evolvedShape = [];
+  var positions = [
+    [-1, -1], // top left
+    [0, -1],  // top center
+    [1, -1],  // top right
+    [1, 0],   // right
+    [1, 1],   // bottom right
+    [0, 1],   // bottom center
+    [-1, 1],  // bottom left
+    [-1, 0],  // left
+  ];
 
   shape.forEach(function(coordinates, i) {
     positions.forEach(function(position) {
-      updateCellNeighbors(neighbors, coordinates, position);
+      updateCellNeighbor(neighbors, coordinates, position);
     });
   });
 
