@@ -4,7 +4,8 @@ var drawGrid = function(canvasContainerId, options) {
   if (options === undefined) {
     options = {
       'separation': 15,
-      'strokeColor': '3D5A80'
+      'strokeColor': '#3D5A80',
+      'fillColor': '#67EFBF'
     };
   }
 
@@ -28,6 +29,7 @@ var drawGrid = function(canvasContainerId, options) {
     var x = (i * options.separation);
     ctx.moveTo(x, 0);
     ctx.lineTo(x, canvasHeight);
+
   }
 
   for (var i = 1; i < horizontalLineCount; i++) {
@@ -36,9 +38,13 @@ var drawGrid = function(canvasContainerId, options) {
     ctx.lineTo(canvasWidth, y);
   }
 
+
   ctx.strokeWidth = 1;
   ctx.strokeStyle = options.strokeColor;
   ctx.stroke();
+
+  ctx.fillStyle = options.fillColor;
+  ctx.fillRect(options.separation * 4, options.separation * 4, options.separation, options.separation);
 
 };
 
