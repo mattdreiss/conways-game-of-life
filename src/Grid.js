@@ -24,13 +24,13 @@ var drawGrid = function(canvasContainerId, options) {
 
   var ctx = canvas[0].getContext('2d');
 
-  for (var i = 0; i <= verticalLineCount; i++) {
+  for (var i = 1; i < verticalLineCount; i++) {
     var x = (i * options.separation);
     ctx.moveTo(x, 0);
     ctx.lineTo(x, canvasHeight);
   }
 
-  for (var i = 0; i <= horizontalLineCount; i++) {
+  for (var i = 1; i < horizontalLineCount; i++) {
     var y = (i * options.separation);
     ctx.moveTo(0, y);
     ctx.lineTo(canvasWidth, y);
