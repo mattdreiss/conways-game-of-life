@@ -5,7 +5,7 @@ var drawGrid = function(canvasContainerId, options) {
     options = {
       'separation': 15,
       'strokeColor': '#3D5A80',
-      'fillColor': '#67EFBF'
+      'fillColor': '#EE6C4D'
     };
   }
 

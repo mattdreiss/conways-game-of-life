@@ -1,6 +1,8 @@
 html,
 body {
   margin: 0;
+  font-family: 'Roboto', sans-serif;
+  color: #3D5A80;
 }
 
 .header {
@@ -9,8 +11,12 @@ body {
   bottom: 100px;
   left: 0;
   right: 0;
-  background-color: blue;
+  background-color: #67EFBF;
   height: 100px;
+}
+
+.header {
+  padding: 5px 15px;
 }
 
 .container {
