@@ -24,27 +24,27 @@ var drawGrid = function(canvasContainerId, options) {
   }).appendTo(canvasContainer);
 
   var ctx = canvas[0].getContext('2d');
-
-  for (var i = 1; i < verticalLineCount; i++) {
-    var x = (i * options.separation);
-    ctx.moveTo(x, 0);
-    ctx.lineTo(x, canvasHeight);
-
-  }
-
-  for (var i = 1; i < horizontalLineCount; i++) {
-    var y = (i * options.separation);
-    ctx.moveTo(0, y);
-    ctx.lineTo(canvasWidth, y);
-  }
-
-
-  ctx.strokeWidth = 1;
+  ctx.lineWidth = 1;
   ctx.strokeStyle = options.strokeColor;
-  ctx.stroke();
+
+  for (var x = options.separation; x < canvasWidth; x += options.separation) {
+    ctx.beginPath();
+    ctx.moveTo(x + 0.5, 0);
+    ctx.lineTo(x + 0.5, canvasHeight);
+    ctx.stroke();
+    ctx.closePath();
+  }
+
+  for (var y = options.separation; y < canvasHeight; y += options.separation) {
+    ctx.beginPath();
+    ctx.moveTo(0, y + 0.5);
+    ctx.lineTo(canvasWidth, y + 0.5);
+    ctx.stroke();
+    ctx.closePath();
+  }
 
   ctx.fillStyle = options.fillColor;
-  ctx.fillRect(options.separation * 4, options.separation * 4, options.separation, options.separation);
+  ctx.fillRect(options.separation * 4 + 1, options.separation * 4 + 1, options.separation - 1, options.separation - 1);
 
 };
 

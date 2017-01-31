@@ -27,6 +27,6 @@ body {
 
 canvas {
   border-style: solid;
-  border-width: 2px;
+  border-width: 1px;
   border-color: #3D5A80;
 }
