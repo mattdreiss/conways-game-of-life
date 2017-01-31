@@ -23,6 +23,12 @@ var grid = {
     .attr({
       width: this.width,
       height: this.height
+    })
+    .click(function(event) {
+      grid.toggleCell([
+        Math.floor((event.clientX - $(this).offset().left) / grid.options.size),
+        Math.floor((event.clientY - $(this).offset().top) / grid.options.size)]);
+      grid.draw(controls.shape);
     }).appendTo(canvasContainer);
   },
   'draw': function(shape) {
@@ -55,6 +61,20 @@ var grid = {
         grid.options.size - 1,
         grid.options.size - 1);
     })
+  },
+  'toggleCell': function(cell) {
+    var index = -1;
+    controls.shape.forEach(function(c, i) {
+      if (c[0] === cell[0] && c[1] === cell[1]) {
+        index = i;
+      }
+    });
+
+    if (index === -1) {
+      controls.shape.push(cell);
+    } else {
+      controls.shape.splice(index, 1);
+    }
   },
   'atMidPoint': function(shape) {
     shape.forEach(function(coordinates) {
