@@ -1,53 +1,65 @@
 'use strict'
 
-var drawGrid = function(canvasContainerId, options) {
-  if (options === undefined) {
-    options = {
-      'separation': 15,
-      'strokeColor': '#3D5A80',
-      'fillColor': '#EE6C4D'
-    };
-  }
-
+var createCanvas = function(canvasContainerId, options) {
   var canvasContainer = $('#' + canvasContainerId);
 
-  var verticalLineCount = Math.floor(canvasContainer.width() / options.separation);
-  var horizontalLineCount = Math.floor(canvasContainer.height() / options.separation);
+  var canvasWidth = Math.floor(canvasContainer.width() / options.size) * options.size + 1;
+  var canvasHeight = Math.floor(canvasContainer.height() / options.size) * options.size + 1;
 
-  var canvasWidth = options.separation * verticalLineCount;
-  var canvasHeight = options.separation * horizontalLineCount;
-
-  var canvas = $('<canvas/>')
+  return $('<canvas/>')
   .attr({
     width: canvasWidth,
     height: canvasHeight
   }).appendTo(canvasContainer);
+}
+
+var drawGrid = function(canvas, shape, options) {
+  var width = canvas.width();
+  var height = canvas.height();
+  var midPointX = width / 2 / options.size;
+  var midPointY = height / 2 / options.size;
 
   var ctx = canvas[0].getContext('2d');
+  ctx.clearRect(0, 0, width, height);
   ctx.lineWidth = 1;
   ctx.strokeStyle = options.strokeColor;
 
-  for (var x = options.separation; x < canvasWidth; x += options.separation) {
+  for (var x = 0; x <= width; x += options.size) {
     ctx.beginPath();
     ctx.moveTo(x + 0.5, 0);
-    ctx.lineTo(x + 0.5, canvasHeight);
+    ctx.lineTo(x + 0.5, height);
     ctx.stroke();
     ctx.closePath();
   }
 
-  for (var y = options.separation; y < canvasHeight; y += options.separation) {
+  for (var y = 0; y <= height; y += options.size) {
     ctx.beginPath();
     ctx.moveTo(0, y + 0.5);
-    ctx.lineTo(canvasWidth, y + 0.5);
+    ctx.lineTo(width, y + 0.5);
     ctx.stroke();
     ctx.closePath();
   }
 
   ctx.fillStyle = options.fillColor;
-  ctx.fillRect(options.separation * 4 + 1, options.separation * 4 + 1, options.separation - 1, options.separation - 1);
+  shape.forEach(function (coordinates) {
+    ctx.fillRect(options.size * coordinates[0] + 1, options.size * coordinates[1] + 1, options.size - 1, options.size - 1);
+  });
 
 };
 
 $(document).ready(function() {
-  drawGrid("canvasContainer");
+  var canvasOptions = {
+    'size': 15,
+    'strokeColor': '#3D5A80',
+    'fillColor': '#EE6C4D',
+  };
+
+  var canvas = createCanvas("canvasContainer", canvasOptions)
+
+  var shape = [[1,0], [2,1], [2,2], [1,2], [0,2]];
+  drawGrid(canvas, shape, canvasOptions);
+  setInterval(function() {
+    shape = evolve(shape);
+    drawGrid(canvas, shape, canvasOptions);
+  }, 250);
 });
