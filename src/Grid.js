@@ -46,20 +46,3 @@ var drawGrid = function(canvas, shape, options) {
   });
 
 };
-
-$(document).ready(function() {
-  var canvasOptions = {
-    'size': 15,
-    'strokeColor': '#3D5A80',
-    'fillColor': '#EE6C4D',
-  };
-
-  var canvas = createCanvas("canvasContainer", canvasOptions)
-
-  var shape = [[1,0], [2,1], [2,2], [1,2], [0,2]];
-  drawGrid(canvas, shape, canvasOptions);
-  setInterval(function() {
-    shape = evolve(shape);
-    drawGrid(canvas, shape, canvasOptions);
-  }, 250);
-});
