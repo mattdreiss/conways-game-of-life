@@ -13,13 +13,10 @@ body {
   right: 0;
   background-color: #67EFBF;
   height: 100px;
-}
-
-.header {
   padding: 5px 15px;
 }
 
-.container {
+.grid-container {
   position: absolute;
   top: 100px;
   bottom: 0;

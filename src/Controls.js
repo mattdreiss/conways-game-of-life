@@ -36,8 +36,8 @@ $(document).ready(function() {
     'strokeColor': '#3D5A80',
     'fillColor': '#EE6C4D',
   };
-  var shape = [[1,0], [2,1], [2,2], [1,2], [0,2]];
 
   grid.init("canvasContainer", canvasOptions);
+  var shape = grid.atMidPoint([[1,0], [2,1], [2,2], [1,2], [0,2]]);
   controls.init($('#start-stop'), shape, grid, 250);
 });
