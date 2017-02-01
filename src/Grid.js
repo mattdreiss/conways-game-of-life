@@ -33,7 +33,7 @@ var grid = {
     this.rows = Math.floor(canvasContainer.height() / this.options.size);
     this.width = this.columns * this.options.size + 1;
     this.height = this.rows * this.options.size + 1;
-    this.midPoint = [this.columns / 2, this.rows / 2];
+    this.midPoint = [Math.floor(this.columns / 2), Math.floor(this.rows / 2)];
 
     return $('<canvas/>')
     .attr({
