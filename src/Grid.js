@@ -1,11 +1,24 @@
 'use strict'
 
-var shapes = [
-  {name: 'Empty', data:[]},
-  {name: 'Blinker', data: [[0,0], [1,0], [2,0]]},
-  {name: 'Glider', data:[[1,0], [2,1], [2,2], [1,2], [0,2]]},
-  {name: 'Lightweight spaceship (LWWS)', data:[[0,1], [0,3], [1,0], [2,0], [3,0], [3,3], [4,0], [4,1], [4,2]]},
-];
+var pattern = {
+  'definedShapes': [
+    {name: 'Empty', data:[]},
+    {name: 'Blinker', data: [[0,0], [1,0], [2,0]]},
+    {name: 'Glider', data:[[1,0], [2,1], [2,2], [1,2], [0,2]]},
+    {name: 'Lightweight spaceship (LWWS)', data:[[0,1], [0,3], [1,0], [2,0], [3,0], [3,3], [4,0], [4,1], [4,2]]}
+  ],
+  'randomShape': function(columns, rows) {
+    var shape = [];
+    for (var i = 0; i < rows; i++) {
+      for (var j = 0; j < columns; j++) {
+        if (Math.random() > 0.5) {
+          shape.push([j, i]);
+        }
+      }
+    }
+    return shape;
+  }
+}
 
 var grid = {
   'init': function(containerId, options, shape) {
@@ -16,9 +29,11 @@ var grid = {
   'createCanvas': function(canvasContainerId) {
     var canvasContainer = $('#' + canvasContainerId);
 
-    this.width = Math.floor(canvasContainer.width() / this.options.size) * this.options.size + 1;
-    this.height = Math.floor(canvasContainer.height() / this.options.size) * this.options.size + 1;
-    this.midPoint = [Math.floor(this.width / this.options.size / 2), Math.floor(this.height / this.options.size / 2)];
+    this.columns = Math.floor(canvasContainer.width() / this.options.size);
+    this.rows = Math.floor(canvasContainer.height() / this.options.size);
+    this.width = this.columns * this.options.size + 1;
+    this.height = this.rows * this.options.size + 1;
+    this.midPoint = [this.columns / 2, this.rows / 2];
 
     return $('<canvas/>')
     .attr({
@@ -83,5 +98,8 @@ var grid = {
       coordinates[1] += grid.midPoint[1];
     });
     this.shape = shape;
+  },
+  'loadRandomShape': function() {
+    this.shape = pattern.randomShape(this.columns, this.rows);
   }
 };

@@ -38,5 +38,5 @@ $(document).ready(function() {
   var shape = [[1,0], [2,1], [2,2], [1,2], [0,2]];
 
   grid.init("canvasContainer", canvasOptions, shape);
-  controls.init($('#start-stop'), grid, 250);
+  controls.init($('#start-stop'), grid, 10);
 });
