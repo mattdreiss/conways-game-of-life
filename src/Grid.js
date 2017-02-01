@@ -8,9 +8,10 @@ var shapes = [
 ];
 
 var grid = {
-  'init': function(containerId, options) {
+  'init': function(containerId, options, shape) {
     this.options = options;
     this.canvas = this.createCanvas(containerId);
+    this.loadShape(shape);
   },
   'createCanvas': function(canvasContainerId) {
     var canvasContainer = $('#' + canvasContainerId);
@@ -28,10 +29,10 @@ var grid = {
       grid.toggleCell([
         Math.floor((event.clientX - $(this).offset().left) / grid.options.size),
         Math.floor((event.clientY - $(this).offset().top) / grid.options.size)]);
-      grid.draw(controls.shape);
+      grid.draw(grid.shape);
     }).appendTo(canvasContainer);
   },
-  'draw': function(shape) {
+  'draw': function() {
     var ctx = this.canvas[0].getContext('2d');
     ctx.clearRect(0, 0, this.width, this.height);
     ctx.lineWidth = 1;
@@ -54,7 +55,7 @@ var grid = {
     }
 
     ctx.fillStyle = this.options.fillColor;
-    shape.forEach(function (coordinates) {
+    this.shape.forEach(function (coordinates) {
       ctx.fillRect(
         grid.options.size * coordinates[0] + 1,
         grid.options.size * coordinates[1] + 1,
@@ -64,23 +65,23 @@ var grid = {
   },
   'toggleCell': function(cell) {
     var index = -1;
-    controls.shape.forEach(function(c, i) {
+    grid.shape.forEach(function(c, i) {
       if (c[0] === cell[0] && c[1] === cell[1]) {
         index = i;
       }
     });
 
     if (index === -1) {
-      controls.shape.push(cell);
+      grid.shape.push(cell);
     } else {
-      controls.shape.splice(index, 1);
+      grid.shape.splice(index, 1);
     }
   },
-  'atMidPoint': function(shape) {
+  'loadShape': function(shape) {
     shape.forEach(function(coordinates) {
       coordinates[0] += grid.midPoint[0];
       coordinates[1] += grid.midPoint[1];
     });
-    return shape;
+    this.shape = shape;
   }
 };

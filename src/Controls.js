@@ -1,21 +1,20 @@
 'use strict'
 
 var controls = {
-  'init': function(animateBtn, shape, grid, frequency) {
+  'init': function(animateBtn, grid, frequency) {
     this.animateBtn = animateBtn;
     this.animateBtn.click(function() {
       controls.toggleAnimate();
     });
-    this.shape = shape,
     this.grid = grid,
     this.frequency = frequency;
     this.animating = false;
-    this.grid.draw(shape);
+    this.grid.draw();
   },
   'animate': function() {
     this.interval = setInterval(function() {
-      controls.shape = evolve(controls.shape);
-      this.grid.draw(controls.shape);
+      this.grid.shape = evolve(this.grid.shape);
+      this.grid.draw();
     }, this.frequency);
   },
   'toggleAnimate': function() {
@@ -36,8 +35,8 @@ $(document).ready(function() {
     'strokeColor': '#3D5A80',
     'fillColor': '#EE6C4D',
   };
+  var shape = [[1,0], [2,1], [2,2], [1,2], [0,2]];
 
-  grid.init("canvasContainer", canvasOptions);
-  var shape = grid.atMidPoint([[1,0], [2,1], [2,2], [1,2], [0,2]]);
-  controls.init($('#start-stop'), shape, grid, 250);
+  grid.init("canvasContainer", canvasOptions, shape);
+  controls.init($('#start-stop'), grid, 250);
 });
