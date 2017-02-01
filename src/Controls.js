@@ -1,15 +1,30 @@
 'use strict'
 
 var controls = {
-  'init': function(animateBtn, grid, frequency) {
-    this.animateBtn = animateBtn;
-    this.animateBtn.click(function() {
-      controls.toggleAnimate();
-    });
+  'init': function(contolContainer, grid, frequency) {
     this.grid = grid,
     this.frequency = frequency;
     this.animating = false;
     this.grid.draw();
+
+    this.animateBtn = $('<button>')
+      .attr('id', 'toggleAnimate')
+      .addClass('btn')
+      .text('Start')
+      .click(function() {
+        controls.toggleAnimate();
+      })
+      .appendTo(contolContainer);
+
+    this.randomizeBtn = $('<button>')
+      .attr('id', 'randomize')
+      .addClass('btn')
+      .text('Random')
+      .click(function() {
+        grid.loadRandomShape();
+        grid.draw();
+      })
+      .appendTo(contolContainer);
   },
   'animate': function() {
     this.interval = setInterval(function() {
@@ -20,10 +35,10 @@ var controls = {
   'toggleAnimate': function() {
     if (!this.animating) {
       this.animate();
-      this.animateBtn.text("stop");
+      this.animateBtn.text("Stop");
     } else {
       clearInterval(this.interval);
-      this.animateBtn.text("start");
+      this.animateBtn.text("Start");
     }
     this.animating = !this.animating;
   }
@@ -36,7 +51,6 @@ $(document).ready(function() {
     'fillColor': '#EE6C4D',
   };
   var shape = [[1,0], [2,1], [2,2], [1,2], [0,2]];
-
-  grid.init("canvasContainer", canvasOptions, shape);
-  controls.init($('#start-stop'), grid, 10);
+  grid.init($('#canvasContainer'), canvasOptions, shape);
+  controls.init($('.controls'), grid, 10);
 });

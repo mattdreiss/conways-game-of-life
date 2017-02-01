@@ -21,14 +21,12 @@ var pattern = {
 }
 
 var grid = {
-  'init': function(containerId, options, shape) {
+  'init': function(canvasContainer, options, shape) {
     this.options = options;
-    this.canvas = this.createCanvas(containerId);
+    this.canvas = this.createCanvas(canvasContainer);
     this.loadShape(shape);
   },
-  'createCanvas': function(canvasContainerId) {
-    var canvasContainer = $('#' + canvasContainerId);
-
+  'createCanvas': function(canvasContainer) {
     this.columns = Math.floor(canvasContainer.width() / this.options.size);
     this.rows = Math.floor(canvasContainer.height() / this.options.size);
     this.width = this.columns * this.options.size + 1;
