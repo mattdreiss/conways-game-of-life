@@ -34,12 +34,23 @@ var controls = {
         grid.draw();
       })
       .appendTo(contolContainer);
+
+    this.speedSlider = $('<input>')
+      .attr({'id': 'speed', 'type': 'range', 'min': 500, 'max': 990, 'step': 10, 'value': 500})
+      .change(function() {
+        controls.frequency = 1000 - $(this).val();
+        if (controls.animating) {
+          controls.animate();
+        }
+      })
+      .appendTo(contolContainer);
   },
   'next': function() {
     this.grid.shape = evolve(this.grid.shape);
     this.grid.draw();
   },
   'animate': function() {
+    clearInterval(this.interval);
     this.interval = setInterval(function() {
       this.grid.shape = evolve(this.grid.shape);
       this.grid.draw();
@@ -65,5 +76,5 @@ $(document).ready(function() {
   };
   var shape = [[1,0], [2,1], [2,2], [1,2], [0,2]];
   grid.init($('#canvasContainer'), canvasOptions, shape);
-  controls.init($('.controls'), grid, 10);
+  controls.init($('.controls'), grid, 500);
 });
