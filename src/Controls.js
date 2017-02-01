@@ -16,6 +16,15 @@ var controls = {
       })
       .appendTo(contolContainer);
 
+    this.nextBtn = $('<button>')
+      .attr('id', 'next')
+      .addClass('btn')
+      .text('Next >>')
+      .click(function() {
+        controls.next();
+      })
+      .appendTo(contolContainer);
+
     this.randomizeBtn = $('<button>')
       .attr('id', 'randomize')
       .addClass('btn')
@@ -25,6 +34,10 @@ var controls = {
         grid.draw();
       })
       .appendTo(contolContainer);
+  },
+  'next': function() {
+    this.grid.shape = evolve(this.grid.shape);
+    this.grid.draw();
   },
   'animate': function() {
     this.interval = setInterval(function() {
